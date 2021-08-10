@@ -1,0 +1,34 @@
+{
+  "name": "usetenor",
+  "version": "1.0.1",
+  "description": "React JS tenor.com open source api",
+  "main": "use-tenor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mehmetbasrioglu/useTenor.git"
+  },
+  "keywords": [
+    "tenor",
+    "usetenor",
+    "react js",
+    "reactjs",
+    "javasript",
+    "hook"
+  ],
+  "author": "mehmetbasrioglu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mehmetbasrioglu/useTenor/issues"
+  },
+  "homepage": "https://github.com/mehmetbasrioglu/useTenor#readme",
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
