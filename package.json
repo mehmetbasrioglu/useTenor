@@ -1,6 +1,6 @@
 {
   "name": "usetenor",
-  "version": "1.0.1",
+  "version": "1.1.2",
   "description": "React JS tenor.com open source api",
   "main": "use-tenor.js",
   "scripts": {
@@ -13,17 +13,18 @@
   "keywords": [
     "tenor",
     "usetenor",
-    "react js",
+    "react",
     "reactjs",
-    "javasript",
-    "hook"
+    "javascript",
+    "hook",
+    "gif"
   ],
   "author": "mehmetbasrioglu",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mehmetbasrioglu/useTenor/issues"
   },
-  "homepage": "https://github.com/mehmetbasrioglu/useTenor#readme",
+  "homepage": "https://usetenor.netlify.app/",
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
