@@ -1,61 +1,142 @@
-import axios from "axios";
-import React from "react";
+export default class useTenor {
 
+  //Private props
+  #searchTerm;
+  #limit;
 
+  //Default Ctor
+  constructor() {
+    this.#searchTerm = "";
+    this.#limit = 10;
+  }
 
-function useTenor(text,key) {
-  const [result, setResult] = React.useState([]);
-  
-  const searchHandle = (searchTerm) => {
-    var apikey = key;
-    var search =
-      "https://g.tenor.com/v1/search?q=" + searchTerm + "&key=" + apikey + "&limit="+50;
-    var trend = "https://g.tenor.com/v1/trending?key=" + apikey + "&limit=50";
-    axios.get(text ? search : trend).then(function(response) {
-      const temporary = [];
-      for (var i = 0; i < response.data.results.length; i++) {
-        temporary.push({
-          src: response.data.results[i].media[0].tinygif,
+  //Setters
+  setSearchTerm (searchTerm) {
+    this.#searchTerm = searchTerm;
+  }
+
+  setLimit(limit){
+    if(typeof limit === "string") {
+      return console.error("Limit must be an integer");
+      }
+    else{
+    this.#limit = limit
+    }
+  }
+
+  async Suggestions(key) {
+    const data = await fetch(`https://g.tenor.com/v1/search_suggestions?q=${this.#searchTerm}&key=${key}&limit=${this.#limit}`)
+    .then((response) => {
+      if(response.status == 200){
+        return response.json();
+      }
+      else{
+        return console.error("Error:", response.status);
+      }
+    })
+    .then((response) => {
+      const DataTransformedObject = [];
+      for (var i = 0; i < response.results.length; i++) {
+        DataTransformedObject.push({
+          "keyword": response.results[i],
         });
       }
-      setResult(temporary.map((item) => {return item.src}));
+      return DataTransformedObject;
+    }
+    );
+
+    return data;
+  }
+
+  //Getters
+  async searchOnTenor(key) {
+    const data = await fetch(
+      `https://g.tenor.com/v1/search?q=${this.#searchTerm}&key=${key}&limit=${this.#limit}`
+    )
+    .then((response) => {
+      if(response.status == 200) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then((data) => {
+      if (data.error){
+        throw new Error(data.error);
+      }
+      const DataTransformedObject = [];
+      for (var i = 0; i < data.results.length; i++) {
+        DataTransformedObject.push({
+          "src": data.results[i].media[0].tinygif
+        });
+      }
+
+      return DataTransformedObject.map((dto) => {
+        return dto.src
+        });
     });
+    return data;
+  }
 
-    return;
-  };
-  React.useEffect(() => {
-    searchHandle(text);
-  }, [text]);
-  return result;
-}
+  async getCategories(locale) {
+    const data = await fetch(
+      "https://g.tenor.com/v1/categories?locale=" + locale
+    )
+      .then((response) => {
+        if (
+          response.status == 400 ||
+          response.status == 404 ||
+          response.status == 500
+        ) {
+          throw new Error(response.statusText);
+        } else {
+          return response.json();
+        }
+      })
+      .then((response) => {
+        if (response.error) {
+          return { error: response.error };
+        }
+      const DataTransformedObject = [];
+      for (var i = 0; i < response.tags.length; i++) {
+        DataTransformedObject.push({
+          searchTerm: response.tags[i].searchterm,
+          url: response.tags[i].image,
+        });
+      }
+        return DataTransformedObject;
+      });
+    return data;
+  }
 
-
-export function useTenorCategories(locale) {
-  const [result, setResult] = React.useState([]);
-
-  const categoryHandle = (locale) => {
-    var categories = "https://g.tenor.com/v1/categories?locale="+locale;
-    
-    axios.get(categories).then(function(response) {
-        const temporary = [];
-        for (var i = 0; i < response.data.tags.length; i++) {
-          temporary.push({
-            searchTerm: response.data.tags[i].searchterm,
-            url: response.data.tags[i].image,
+  async randomImages(key) {
+    const data = await fetch(
+      `https://g.tenor.com/v1/random?q=${this.#searchTerm}&key=${key}`
+    )
+      .then((response) => {
+        if (
+          response.status == 400 ||
+          response.status == 404 ||
+          response.status == 500
+        ) {
+          throw new Error(response.statusText);
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (data.error) {
+          return { error: data.error };
+        }
+        const DataTransformedObject = [];
+        for (var i = 0; i < data.results.length; i++) {
+          DataTransformedObject.push({
+            src: data.results[i].media[0].tinygif,
           });
         }
-        setResult(temporary);
-    });
-    return;
-  };
-
-  React.useEffect(() => {
-    categoryHandle(locale);
-  });
-
-  return result;
+        return DataTransformedObject.map((item) => {
+          return item.src;
+        });
+      });
+    return data;
+  }
 }
-
-
-
-export default useTenor;

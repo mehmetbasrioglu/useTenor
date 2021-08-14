@@ -6,7 +6,7 @@
 <a href="https://usetenor.netlify.app/"><img src="https://img.shields.io/badge/Documentation-007bde?style=for-the-badge&logoColor=white"/></a>
   
 ## 1. Installation
-**useTenor** can be easily installed via NPM: `npm install useTenor`.
+**useTenor** can be easily installed via NPM: `npm install usetenor`.
 
 Alternatively, you can download the ZIP from here and require it in your project.
 
