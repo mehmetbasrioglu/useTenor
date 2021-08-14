@@ -1,18 +1,12 @@
 export default class useTenor {
-
-  //Private props
-  #searchTerm;
-  #limit;
-
-  //Default Ctor
   constructor() {
-    this.#searchTerm = "";
-    this.#limit = 10;
+    this.searchTerm = "";
+    this.limit = 10;
   }
 
   //Setters
   setSearchTerm (searchTerm) {
-    this.#searchTerm = searchTerm;
+    this.searchTerm = searchTerm;
   }
 
   setLimit(limit){
@@ -20,12 +14,12 @@ export default class useTenor {
       return console.error("Limit must be an integer");
       }
     else{
-    this.#limit = limit
+    this.limit = limit
     }
   }
 
   async Suggestions(key) {
-    const data = await fetch(`https://g.tenor.com/v1/search_suggestions?q=${this.#searchTerm}&key=${key}&limit=${this.#limit}`)
+    const data = await fetch(`https://g.tenor.com/v1/search_suggestions?q=${this.searchTerm}&key=${key}&limit=${this.limit}`)
     .then((response) => {
       if(response.status == 200){
         return response.json();
@@ -51,7 +45,7 @@ export default class useTenor {
   //Getters
   async searchOnTenor(key) {
     const data = await fetch(
-      `https://g.tenor.com/v1/search?q=${this.#searchTerm}&key=${key}&limit=${this.#limit}`
+      `https://g.tenor.com/v1/search?q=${this.searchTerm}&key=${key}&limit=${this.limit}`
     )
     .then((response) => {
       if(response.status == 200) {
@@ -110,7 +104,7 @@ export default class useTenor {
 
   async randomImages(key) {
     const data = await fetch(
-      `https://g.tenor.com/v1/random?q=${this.#searchTerm}&key=${key}`
+      `https://g.tenor.com/v1/random?q=${this.searchTerm}&key=${key}`
     )
       .then((response) => {
         if (

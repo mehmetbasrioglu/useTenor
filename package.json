@@ -1,6 +1,6 @@
 {
   "name": "usetenor",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "tenor.com React & Javascript open source api",
   "main": "use-tenor.js",
   "scripts": {
